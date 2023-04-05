@@ -43,7 +43,6 @@ export default function Home({ users }: Props ): JSX.Element{
   };
 
   return (
-    <>
       <div>
 
           <SearchBox 
@@ -52,7 +51,6 @@ export default function Home({ users }: Props ): JSX.Element{
           />
           <CardList users={filteredPuppies}/>
       </div>
-    </>
   )
 }
 

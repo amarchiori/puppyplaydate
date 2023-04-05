@@ -40,7 +40,7 @@ const CustomInput = React.forwardRef<HTMLInputElement, FloatingLabelInputProps>(
                     type={type}
                     placeholder=''
                     ref={ref}
-                    value={value}
+                    value={value || ''}
                     onBlur={onBlur}
                     onChange={(e) => onChange(e.target.value)}
                     className='
