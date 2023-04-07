@@ -1,31 +1,14 @@
 import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import CustomInput from '../auth-components/customInput';
+import { PetProfileFormData } from '../../pages/profile';
 import clientPromise from '../../lib/mongodb';
 
-enum GenderEnum {
-  male = "male",
-  female = "female"
-};
 
-type PetProfileFormData = {
-  city: String;
-  state: String;
-  puppy: {
-    age: String;
-    breed: String;
-    dog_name: String;
-    tagline: String;
-    intro: String;
-    gender: GenderEnum;
-  };
-};
 
 export default function NewPetProfile() {
-    // Initialize the react-hook-form
     const { register, control, handleSubmit, reset } = useForm<PetProfileFormData>();
   
-    // Define a function to handle form submission
     const onSubmit: SubmitHandler<PetProfileFormData> = async (formData) => {
       // Connect to the MongoDB database
     //   const client = await clientPromise;
@@ -102,7 +85,7 @@ export default function NewPetProfile() {
         <button 
           type="submit"
           className='bg-pinkLink text-white bg rounded-lg px-3 py-1'
-        >Save</button>
+        >Add</button>
         </div>
       </form>
     );

@@ -1,77 +1,35 @@
-import clientPromise from '../lib/mongodb'
-import { GetServerSideProps } from 'next';
-import { useState, useEffect, ChangeEvent } from 'react';
-import SearchBox from '../components/home/searchBox';
+import React, { useContext, useEffect, useState } from 'react';
+import { PuppiesContext } from '../context/puppiesContext';
+import { Puppy } from '../context/types';
 import CardList from '../components/home/cardList';
+import SearchBox from '../components/home/searchBox';
 
-
-type Props = {
-  users: User[];
-};
-
-export type User = {
-  puppy: {
-    dog_name: string;
-    tagline: string;
-    age: string;
-    sex: string;
-    breed: string;
-    intro: string;
-  };
-  _id: string;
-  email: string;
-  password: string;
-  city: string;
-  state: string;
-};
-
-export default function Home({ users }: Props ): JSX.Element{
-  const [searchField, setSearchField] = useState('');
-  const [puppies, setPuppies ] = useState<User[]>(users);
-  const [filteredPuppies, setFilteredPuppies] = useState(puppies);
+const Home = () => {
+  const { puppies, fetchPuppies } = useContext(PuppiesContext);
+  const [searchState, setSearchState] = useState<string>('');
 
   useEffect(() => {
-    const newFilteredPuppies = puppies.filter((puppy) => {
-      return puppy.state.toLocaleLowerCase().includes(searchField)
-    })
-    setFilteredPuppies(newFilteredPuppies);
-  }, [puppies, searchField]);
+    fetchPuppies();
+  }, [fetchPuppies]);
 
-  const onSearchChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    const searchFieldString = event.target.value.toLocaleLowerCase();
-    setSearchField(searchFieldString);
+  const handleSearchState = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchState(event.target.value);
   };
 
+  const filteredPuppies: Puppy[] = puppies.filter(
+    (puppy) =>
+      puppy.state.toLowerCase().includes(searchState.toLowerCase())
+  );
+
   return (
-      <div>
-
-          <SearchBox 
-            onChangeHandler={onSearchChange}
-            placeholder='search by state'
+    <div>
+      <SearchBox 
+            onChangeHandler={handleSearchState}
+            placeholder='Search by state...'
           />
-          <CardList users={filteredPuppies}/>
-      </div>
-  )
-}
+      <CardList puppies={filteredPuppies}/>
+    </div>
+  );
+};
 
-export const getServerSideProps: GetServerSideProps<Props> = async () => {
-  try {
-    const client = await clientPromise;
-    const db = client.db("puppies");
-  
-    const users = await db
-        .collection("users")
-        .find({})
-        .sort({ metacritic: -1 })
-        .toArray();
-  
-    return {
-        props: { users: JSON.parse(JSON.stringify(users)) },
-    };
-  } catch (e) {
-      console.error(e);
-      return {
-        props: { users: [] },
-      }
-  }
-}
+export default Home;
