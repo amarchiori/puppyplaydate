@@ -12,7 +12,7 @@ const SearchBox = ({ placeholder, onChangeHandler} : SearchBoxProps ) => {
                 type="search" 
                 placeholder={placeholder}
                 onChange={onChangeHandler}
-                className='border border-zinc-400 rounded-lg px-2 py-1'
+                className='border border-zinc-400 rounded-lg px-2 py- focus:outline-0 focus:border-pinkLink focus:ring-transparent'
             />
         </div>
     ) 

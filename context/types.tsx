@@ -1,5 +1,3 @@
-import { ObjectId } from "mongodb";
-
 enum GenderEnum {
     male = "male",
     female = "female"

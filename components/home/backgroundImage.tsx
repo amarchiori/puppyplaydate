@@ -7,7 +7,7 @@ export default function BackgroundImage() {
         src={authBG}
         alt="gradient background" 
         fill
-        className="cover z-0"
+        className="z-0"
         priority
     />
 )

@@ -22,12 +22,14 @@ const Home = () => {
   );
 
   return (
-    <div>
-      <SearchBox 
-            onChangeHandler={handleSearchState}
-            placeholder='Search by state...'
-          />
-      <CardList puppies={filteredPuppies}/>
+    <div className='min-h-screen flex flex-col'>
+      <div className='flex-grow'>
+        <SearchBox 
+          onChangeHandler={handleSearchState}
+          placeholder='Search by state...'
+        />
+        <CardList puppies={filteredPuppies}/>
+      </div>
     </div>
   );
 };

@@ -1,23 +1,17 @@
-import React from 'react'
+import React, { useContext} from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import CustomInput from '../auth-components/customInput';
-import { PetProfileFormData } from '../../pages/profile';
-import clientPromise from '../../lib/mongodb';
+import { Puppy } from '../../context/types';
+import { PuppiesContext } from '../../context/puppiesContext'
 
 
 
 export default function NewPetProfile() {
-    const { register, control, handleSubmit, reset } = useForm<PetProfileFormData>();
+    const { register, control, handleSubmit, reset } = useForm<Puppy>();
+    const { addPuppy } = useContext(PuppiesContext)
   
-    const onSubmit: SubmitHandler<PetProfileFormData> = async (formData) => {
-      // Connect to the MongoDB database
-    //   const client = await clientPromise;
-    //     const db = client.db("puppies");
-  
-    //   // Insert the new pet profile into the users collection
-    //   await db.collection('users').insertOne(formData);
-  
-      // Clear the form data
+    const onSubmit: SubmitHandler<Puppy> = async (formData) => {
+      // await addPuppy(formData)
       reset();
     console.log(formData)
     };
@@ -51,12 +45,6 @@ export default function NewPetProfile() {
           control={control}
         />
         <CustomInput 
-          label="Breed" 
-          type="text"
-          name="puppy.breed"
-          control={control}
-        />
-        <CustomInput 
           label="Tagline" 
           type="text"
           name="puppy.tagline"
@@ -74,7 +62,7 @@ export default function NewPetProfile() {
           >
             Gender Selection</label>
           <select 
-            {...register("puppy.gender")}
+            {...register("gender")}
             className='border-0 focus:ring-transparent'
           >
             <option value="male">male</option>
