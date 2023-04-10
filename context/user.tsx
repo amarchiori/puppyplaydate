@@ -1,35 +1,20 @@
-import { Document, Schema, model, models } from 'mongoose'
+import { Document, Schema, model, Model } from 'mongoose'
 
 interface IUser extends Document {
-  id: string,
+  name: string;
   email: string;
-  password: string;
-  puppies: Schema.Types.ObjectId[];
 }
 
-const UserSchema = new Schema<IUser>({
-  id: {
-    type: String,
-    required: true,
-  },
+const UserSchema: Schema<IUser> = new Schema({
+  name: String,
   email: {
     type: String,
     required: true,
     unique: true,
   },
-  password: {
-    type: String,
-    required: true,
-  },
-  puppies: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Puppy',
-    },
-  ],
 });
 
-const UserModel = model<IUser>('User', UserSchema);
+const UserModel: Model<IUser> = model<IUser>('User', UserSchema);
 
 export { UserModel };
 export type { IUser };

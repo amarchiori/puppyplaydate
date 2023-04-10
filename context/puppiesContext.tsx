@@ -5,7 +5,7 @@ import { useState } from 'react';
 export interface PuppiesContextProps {
   puppies: IPuppy[];
   fetchPuppies: () => void;
-  addPuppy: (puppy: IPuppy) => Promise<void>;
+  addPuppy: (data: Partial<Omit<IPuppy, '_id' | 'ownerID'>>, owner: string) => Promise<void>;
   updatePuppy: (id: string, updates: Partial<Omit<IPuppy, '_id'>>) => Promise<void>;
   deletePuppy: (id: string) => Promise<void>;
 }
@@ -37,14 +37,18 @@ export function PuppyProvider({ children, session }: PuppyProviderProps): JSX.El
         }
       };
     
-      const addPuppy = async (puppy: IPuppy) => {
+      const addPuppy = async (data: Partial<Omit<IPuppy, '_id' | 'ownerID'>>, owner: string) => {
+        const puppyData = {
+          ...data,
+          ownerID: owner
+        };
         try {
           const response = await fetch('/api/puppies/add-puppy', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify(puppy),
+            body: JSON.stringify(puppyData),
           });
           const data = await response.json();
           setPuppies([...puppies, data]);

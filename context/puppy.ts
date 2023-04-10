@@ -1,20 +1,23 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model, Document, Model } from 'mongoose';
 import { IUser } from './user';
 
+enum Gender {
+  MALE = 'male',
+  FEMALE ='female',
+}
+
 interface IPuppy extends Document {
-  _id: Schema.Types.ObjectId;
-  ownerID: Schema.Types.ObjectId | IUser["_id"];
+  ownerID: IUser["_id"];
   city: string;
   state: string;
   age: number;
   dog_name: string;
   tagline: string;
   intro: string;
-  gender: string;
+  gender: Gender;
 }
 
 const PuppySchema = new Schema<IPuppy>({
-  _id: Schema.Types.ObjectId,
   ownerID: {
     type: Schema.Types.ObjectId,
     ref: 'User',
@@ -46,11 +49,12 @@ const PuppySchema = new Schema<IPuppy>({
   },
   gender: {
     type: String,
+    enum: Object.values(Gender),
     required: true,
   },
 });
 
-const PuppyModel = model<IPuppy>('Puppy', PuppySchema);
+const PuppyModel: Model<IPuppy> = model<IPuppy>('Puppy', PuppySchema);
 
-export { PuppyModel };
+export { PuppyModel, Gender };
 export type { IPuppy };

@@ -23,7 +23,6 @@ export default async function handler(
               gender,
           } = req.body;
           const newPuppy = { 
-            _id: id,
             ownerID,
             city,
             state,
