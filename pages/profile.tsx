@@ -6,14 +6,14 @@ export default function Profile() {
   const [visible, setVisible] = useState(false);
 
 
-
-  const handleNewClick = () => {
+  const handleFormClick = () => {
     setVisible(visible ? false : true);
   };
 
   return (
     <div className='h-screen'>
-      <button onClick={handleNewClick}>click me</button>
+      <h3></h3>
+      <button onClick={handleFormClick}>click me</button>
       {visible ? <Form/> : <></>}
     </div>
   )

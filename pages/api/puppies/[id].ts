@@ -1,6 +1,7 @@
 import { ObjectId } from 'mongodb';
 import { NextApiRequest, NextApiResponse } from 'next';
 import clientPromise from '../../../lib/mongodb';
+import { _id } from '@next-auth/mongodb-adapter';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { method, query } = req;
@@ -27,6 +28,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     case 'PUT':
       try {
         const { 
+            id,
             city,
             state,
             age,
@@ -44,7 +46,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             intro,
             gender,
         };
-        const result = await puppyCollection.updateOne({ _id: new ObjectId(id) }, { $set: updatedPuppy });
+        const result = await puppyCollection.updateOne({ _id: id }, { $set: updatedPuppy });
         if (result.matchedCount === 0) {
           return res.status(404).json({ message: 'Puppy not found' });
         }
@@ -57,7 +59,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     case 'DELETE':
       try {
-        const result = await puppyCollection.deleteOne({ _id: new ObjectId(id) });
+        const result = await puppyCollection.deleteOne({ _id: id });
         if (result.deletedCount === 0) {
           return res.status(404).json({ message: 'Puppy not found' });
         }

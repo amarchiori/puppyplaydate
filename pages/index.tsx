@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { PuppiesContext } from '../context/puppiesContext';
-import { Puppy } from '../context/types';
+import { Puppy } from '../context/user';
 import CardList from '../components/home/cardList';
 import SearchBox from '../components/home/searchBox';
 

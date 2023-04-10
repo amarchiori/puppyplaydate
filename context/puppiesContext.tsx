@@ -1,12 +1,12 @@
 import { createContext } from 'react';
-import { Puppy } from './types';
+import { IPuppy } from '../context/puppy'
 import { useState } from 'react';
 
 export interface PuppiesContextProps {
-  puppies: Puppy[];
+  puppies: IPuppy[];
   fetchPuppies: () => void;
-  addPuppy: (puppy: Omit<Puppy, '_id'>) => Promise<void>;
-  updatePuppy: (id: string, updates: Partial<Omit<Puppy, '_id'>>) => Promise<void>;
+  addPuppy: (puppy: IPuppy) => Promise<void>;
+  updatePuppy: (id: string, updates: Partial<Omit<IPuppy, '_id'>>) => Promise<void>;
   deletePuppy: (id: string) => Promise<void>;
 }
 
@@ -21,10 +21,11 @@ export const PuppiesContext = createContext<PuppiesContextProps>({
 
 interface PuppyProviderProps {
     children: React.ReactNode;
+    session: any;
   }
 
-export function PuppyProvider({ children }: PuppyProviderProps): JSX.Element {
-    const [puppies, setPuppies] = useState<Puppy[]>([]);
+export function PuppyProvider({ children, session }: PuppyProviderProps): JSX.Element {
+    const [puppies, setPuppies] = useState<IPuppy[]>([]);
 
     const fetchPuppies = async () => {
         try {
@@ -36,9 +37,9 @@ export function PuppyProvider({ children }: PuppyProviderProps): JSX.Element {
         }
       };
     
-      const addPuppy = async (puppy: Omit<Puppy, '_id'>) => {
+      const addPuppy = async (puppy: IPuppy) => {
         try {
-          const response = await fetch('/api/puppies', {
+          const response = await fetch('/api/puppies/add-puppy', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -52,18 +53,18 @@ export function PuppyProvider({ children }: PuppyProviderProps): JSX.Element {
         }
       };
     
-      const updatePuppy = async (id: string, updates: Partial<Omit<Puppy, '_id'>>) => {
+      const updatePuppy = async (id: string, updates: Partial<Omit<IPuppy, '_id'>>) => {
         try {
           const response = await fetch(`/api/puppies/${id}`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify(updates),
+            body: JSON.stringify({...updates, ownerID: session.user.id }),
           });
           const updatedPuppy = await response.json();
           setPuppies(prevPuppies =>
-            prevPuppies.map(p => (p._id === id ? updatedPuppy : p))
+            prevPuppies.map(p => (p.id === id ? updatedPuppy : p))
           );
         } catch (error) {
           console.error(error);
@@ -77,7 +78,7 @@ export function PuppyProvider({ children }: PuppyProviderProps): JSX.Element {
           });
           console.log(id)
           if(response.ok){
-            setPuppies(prevPuppies => prevPuppies.filter(p => p._id !== id));
+            setPuppies(prevPuppies => prevPuppies.filter(p => p.id !== id));
           } else {
             console.error(`Failed to delete puppy with ID ${id}`)
           }

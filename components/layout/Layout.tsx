@@ -15,7 +15,7 @@ const Layout = (props: LayoutProps) => {
       </Head>
       <Header/>
       <main className="min-h-screen font-sans w-screen overflow-hidden">{ props.children }</main>
-      <Footer/>
+      {/* <Footer/> */}
     </>
   )
 }

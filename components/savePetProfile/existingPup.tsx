@@ -1,10 +1,12 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import CustomInput from '../auth-components/customInput';
+import CustomInput from './customInput';
 import { PetProfileFormData } from '../../pages/profile';
+import { PuppiesContext } from '../../context/puppiesContext'
 
-function ExistingPup({  }) {
+function ExistingPup({ id: string }) {
   const { register, control, handleSubmit, reset } = useForm<PetProfileFormData>();
+  const { deletePuppy } = useContext(PuppiesContext)
   
   const onSubmit: SubmitHandler<PetProfileFormData> = async (formData) => {
     // Connect to the MongoDB database
@@ -19,9 +21,13 @@ function ExistingPup({  }) {
   console.log(formData)
   };
 
+  const handleDelete = () => {
+    deletePuppy(puppy._id);
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}
-      className='min-[800px]:w-5/6 m-auto'
+      className='min-[800px]:w-3/6 m-auto'
     >
       <CustomInput 
         label="City" 
@@ -78,11 +84,19 @@ function ExistingPup({  }) {
           <option value="female">female</option>
         </select>
       </div>
-      <div className='flex justify-center m-auto w-2/3 pb-5'>
-      <button 
-        type="submit"
-        className='bg-pinkLink text-white bg rounded-lg px-3 py-1'
-      >Save</button>
+      <div className='flex justify-evenly m-auto w-2/3 py-8'>
+        <button 
+          type="submit"
+          className='bg-mainGreen text-white rounded-lg px-3 py-1'
+        >
+          Update Puppy
+        </button>
+        <button
+          onClick={handleDelete}
+          className="bg-gray-300 text-white rounded-lg px-3 py-1"
+        >
+          Delete Puppy
+        </button>
       </div>
     </form>
   )

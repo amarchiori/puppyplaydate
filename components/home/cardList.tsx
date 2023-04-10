@@ -1,4 +1,4 @@
-import { Puppy } from '../../context/types';
+import { Puppy } from '../../context/user';
 import pupPhoto from '../../public/images/pupPhoto.jpg'
 import Image from 'next/image';
 

@@ -1,16 +1,15 @@
 import React, { useContext} from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import CustomInput from '../auth-components/customInput';
-import { Puppy } from '../../context/types';
+import CustomInput from './customInput';
+import { IPuppy } from '../../context/puppy';
 import { PuppiesContext } from '../../context/puppiesContext'
 
 
-
 export default function NewPetProfile() {
-    const { register, control, handleSubmit, reset } = useForm<Puppy>();
+    const { register, control, handleSubmit, reset } = useForm<IPuppy>();
     const { addPuppy } = useContext(PuppiesContext)
   
-    const onSubmit: SubmitHandler<Puppy> = async (formData) => {
+    const onSubmit: SubmitHandler<IPuppy> = async (formData) => {
       // await addPuppy(formData)
       reset();
     console.log(formData)
