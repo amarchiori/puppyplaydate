@@ -22,6 +22,7 @@ export default async function handler(
               intro,
               gender,
           } = req.body;
+          console.log('ownerId:', ownerID)
           const newPuppy = { 
             ownerID,
             city,

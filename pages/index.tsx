@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { PuppiesContext } from '../context/puppiesContext';
-import { Puppy } from '../context/user';
+import { IPuppy } from '../context/puppy';
 import CardList from '../components/home/cardList';
 import SearchBox from '../components/home/searchBox';
 
@@ -10,15 +10,15 @@ const Home = () => {
 
   useEffect(() => {
     fetchPuppies();
-  }, [fetchPuppies]);
+  }, []);
 
   const handleSearchState = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchState(event.target.value);
   };
 
-  const filteredPuppies: Puppy[] = puppies.filter(
+  const filteredPuppies: IPuppy[] = puppies.filter(
     (puppy) =>
-      puppy.state.toLowerCase().includes(searchState.toLowerCase())
+      puppy.state.includes(searchState)
   );
 
   return (

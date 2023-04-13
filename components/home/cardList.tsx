@@ -1,10 +1,10 @@
-import { Puppy } from '../../context/user';
+import { IPuppy } from '../../context/puppy';
 import pupPhoto from '../../public/images/pupPhoto.jpg'
 import Image from 'next/image';
 
 
 type CardListProps = {
-    puppies: Puppy[];
+    puppies: IPuppy[];
 }
 
 const CardList = ({puppies}: CardListProps) => {

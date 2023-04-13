@@ -4,7 +4,7 @@ import CustomInput from './customInput';
 import { PetProfileFormData } from '../../pages/profile';
 import { PuppiesContext } from '../../context/puppiesContext'
 
-function ExistingPup({ id: string }) {
+function ExistingPup({ id}) {
   const { register, control, handleSubmit, reset } = useForm<PetProfileFormData>();
   const { deletePuppy } = useContext(PuppiesContext)
   

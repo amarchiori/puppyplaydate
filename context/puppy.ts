@@ -1,4 +1,4 @@
-import { Schema, model, Document, Model } from 'mongoose';
+import { Schema, model, Document, models } from 'mongoose';
 import { IUser } from './user';
 
 enum Gender {
@@ -54,7 +54,7 @@ const PuppySchema = new Schema<IPuppy>({
   },
 });
 
-const PuppyModel: Model<IPuppy> = model<IPuppy>('Puppy', PuppySchema);
+const PuppyModel = models?.Puppy || model<IPuppy>('Puppy', PuppySchema);
 
 export { PuppyModel, Gender };
 export type { IPuppy };

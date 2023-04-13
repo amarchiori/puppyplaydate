@@ -1,16 +1,16 @@
 import React, { useContext} from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import CustomInput from './customInput';
-import { PuppiesContext } from '../../context/puppiesContext'
-import { Gender } from '../../context/puppy';
+
+import { Gender, IPuppy } from '../../context/puppy';
+import { PuppiesContext } from '../../context/puppiesContext';
 
 interface PuppyFormProps {
-  ownerID: string,
+  ownerID: IPuppy["ownerID"];
+  onClose: () => void;
 }
 
 interface FormValues {
-  ownerID: string,
-  _id: string,
   city: string;
   state: string;
   age: number;
@@ -21,17 +21,18 @@ interface FormValues {
 }
 
 
-export default function NewPetProfile({ ownerID }: PuppyFormProps) {
+export default function NewPetProfile({ onClose, ownerID }: PuppyFormProps) {
     const { register, control, handleSubmit, reset } = useForm<FormValues>();
     const { addPuppy } = useContext(PuppiesContext)
 
-  
     const onSubmit: SubmitHandler<FormValues> = async (formData) => {
-      // await addPuppy(formData)
       await addPuppy(formData, ownerID)
+      console.log(formData);
       reset();
-    console.log(formData)
+      onClose();
     };
+
+
   
     return (
       <form onSubmit={handleSubmit(onSubmit)}

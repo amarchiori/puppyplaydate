@@ -15,6 +15,6 @@
     "isolatedModules": true,
     "jsx": "preserve"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/layout/Layout.jsx", "lib/mongoose.js", "pages/api/[...nextauth].js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/layout/Layout.jsx", "lib/mongoose.js", "pages/api/[...nextauth].js", "pages/addimage.js", "next.config.js"],
   "exclude": ["node_modules"]
 }

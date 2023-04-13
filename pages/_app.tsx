@@ -12,11 +12,11 @@ export default function App({
 
   return (
     <SessionProvider session={session}>
-      <PuppyProvider>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </PuppyProvider>
+        <PuppyProvider>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </PuppyProvider>
     </SessionProvider>
   )
 }

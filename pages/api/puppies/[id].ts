@@ -59,7 +59,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     case 'DELETE':
       try {
-        const result = await puppyCollection.deleteOne({ _id: id });
+        const result = await puppyCollection.deleteOne({ _id: new ObjectId(id) });
         if (result.deletedCount === 0) {
           return res.status(404).json({ message: 'Puppy not found' });
         }

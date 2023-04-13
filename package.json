@@ -6,13 +6,18 @@
     "start": "next start"
   },
   "dependencies": {
+    "@cloudinary/react": "^1.11.2",
+    "@cloudinary/url-gen": "^1.10.0",
     "@next-auth/mongodb-adapter": "^1.1.1",
     "@types/mongodb": "^4.0.7",
     "bcrypt": "^5.1.0",
+    "cloudinary": "^1.35.0",
+    "cloudinary-core": "^2.13.0",
     "mongodb": "^4.8.1",
     "mongoose": "^7.0.3",
     "next": "latest",
     "next-auth": "^4.21.1",
+    "next-cloudinary": "^4.3.0",
     "nodemailer": "^6.9.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
